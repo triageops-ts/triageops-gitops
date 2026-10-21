@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meditriage-backend
+  labels:
+    app: meditriage-backend
+    part-of: meditriage
+    tier: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: meditriage-backend
+  template:
+    metadata:
+      labels:
+        app: meditriage-backend
+        part-of: meditriage
+        tier: backend
+    spec:
+      containers:
+        - name: backend
+          # Imagen fijada por digest (no por tag mutable como ":latest"),
+          # tal como entregó la Tarjeta 1.
+          image: meditriage-backend@sha256:a835fc25f9b69177fe21f6d4b735a1be0f4afb80ddd8ea2c180c10c70f896dcc
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: meditriage-backend-config
+            # Secret creado por la Tarjeta 3 vía Terraform (no es un
+            # archivo YAML del repo, vive directo en el cluster) —
+            # expone su key "api-key" como variable de entorno.
+            - secretRef:
+                name: triageops-secrets
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3
