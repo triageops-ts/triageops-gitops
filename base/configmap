@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: meditriage-backend-config
+  labels:
+    app: meditriage-backend
+    part-of: meditriage
+    tier: backend
+data:
+  # Puerto en el que escucha Uvicorn dentro del contenedor.
+  # Debe coincidir EXACTO con containerPort (deployment.yaml) y
+  # targetPort (service.yaml) — está centralizado aquí a propósito.
+  PORT: "8000"
+  # Configuración no secreta. Ninguna URL/credencial de DB, Redis,
+  # ni API key de la IA va aquí — eso es un Secret, que crea Terraform
+  # (Tarjeta 3), no este ConfigMap.
+  LOG_LEVEL: "info"
+  ENVIRONMENT: "production"
