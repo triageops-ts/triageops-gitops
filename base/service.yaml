@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: meditriage-backend
+  labels:
+    app: meditriage-backend
+    part-of: meditriage
+    tier: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: meditriage-backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000
