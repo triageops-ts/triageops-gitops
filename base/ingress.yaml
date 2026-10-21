@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: meditriage-backend-ingress
+  labels:
+    app: meditriage-backend
+    part-of: meditriage
+    tier: backend
+  annotations:
+    ingress.class: traefik
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: meditriage.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: meditriage-backend
+                port:
+                  number: 80
