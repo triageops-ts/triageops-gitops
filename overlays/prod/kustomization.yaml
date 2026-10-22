@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Ambiente prod: namespace propio dentro del mismo cluster.
+# El namespace y el secret "triageops-secrets" los crea Terraform (no van aquí).
+namespace: triageops-prod
+
+resources:
+  - ../../base
+
+# Imagen del backend. Kustomize reemplaza el nombre/tag de la imagen del Deployment.
+images:
+  - name: meditriage-backend
+    newName: ghcr.io/triageops-ts/meditriage-backend
+    newTag: "e4516f192169443645113bc3897a75828c3ce1f5"
+
+patches:
+  - path: patch-deployment.yaml
+  - path: patch-hpa.yaml
+  - path: patch-ingress.yaml
+  - path: patch-configmap.yaml
