@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: meditriage-backend-config
+data:
+  LOG_LEVEL: "debug"
+  ENVIRONMENT: "development"
