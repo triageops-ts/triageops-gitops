@@ -9,6 +9,7 @@ resources:
   - ../../base
 
 # Imagen del backend. Kustomize reemplaza el nombre/tag de la imagen del Deployment.
+images:
   - name: meditriage-backend
     newName: ghcr.io/triageops-ts/meditriage-backend
     newTag: "e4516f192169443645113bc3897a75828c3ce1f5"
