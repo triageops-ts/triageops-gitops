@@ -13,3 +13,4 @@ images:
 patches:
   - path: patch-deployment.yaml
   - path: patch-configmap.yaml
+# Actualización coordinada de la app
