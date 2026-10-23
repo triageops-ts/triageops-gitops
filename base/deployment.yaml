@@ -28,11 +28,11 @@ spec:
           envFrom:
             - configMapRef:
                 name: meditriage-backend-config
-            # Secret creado por la Tarjeta 3 vía Terraform (no es un
-            # archivo YAML del repo, vive directo en el cluster) —
-            # expone su key "api-key" como variable de entorno.
-            - secretRef:
-                name: triageops-secrets
+          # Secret creado por la Tarjeta 3 vía Terraform (no es un
+          # archivo YAML del repo, vive directo en el cluster) —
+          # expone su key "api-key" como variable de entorno.
+          - secretRef:
+              name: triageops-secrets
           resources:
             requests:
               cpu: "250m"
@@ -42,7 +42,7 @@ spec:
               memory: "512Mi"
           readinessProbe:
             httpGet:
-              path: /health
+              path: /docs
               port: 8000
             initialDelaySeconds: 5
             periodSeconds: 10
@@ -50,7 +50,7 @@ spec:
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /health
+              path: /docs
               port: 8000
             initialDelaySeconds: 15
             periodSeconds: 20
