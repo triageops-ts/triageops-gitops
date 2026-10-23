@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: meditriage-backend
 spec:
-  replicas: 1
+  replicas: 2
   template:
     spec:
       imagePullSecrets:
