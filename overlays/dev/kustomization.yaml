@@ -1,12 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: triageops-dev
+
 resources:
-  - configmap.yaml
-  - deployment.yaml
-  - service.yaml
+  - ../../base
 
 images:
   - name: meditriage-backend
     newName: ghcr.io/triageops-ts/meditriage-backend
     newTag: "e4516f192169443645113bc3897a75828c3ce1f5"
+
+patches:
+  - path: patch-deployment.yaml
+  - path: patch-configmap.yaml
