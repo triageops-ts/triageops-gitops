@@ -1,16 +1,19 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: meditriage-backend
-  labels:
-    app: meditriage-backend
-    part-of: meditriage
-    tier: backend
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
-      app: meditriage-backend
+      app: meditriage
+  strategy:
+    canary:
+      steps:
+      - setWeight: 5
+      - pause: {duration: 2m}
+      - setWeight: 25
+      - pause: {duration: 2m}
   template:
     metadata:
       labels:
