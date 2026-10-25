@@ -6,7 +6,7 @@ spec:
   replicas: 4
   selector:
     matchLabels:
-      app: meditriage
+      app: meditriage-backend
   strategy:
     canary:
       steps:
