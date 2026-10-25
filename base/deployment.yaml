@@ -18,6 +18,8 @@ spec:
         part-of: meditriage
         tier: backend
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - name: backend
           image: meditriage-backend@sha256:a835fc25f9b69177fe21f6d4b735a1be0f4afb80ddd8ea2c180c10c70f896dcc
