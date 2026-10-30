@@ -9,7 +9,7 @@ resources:
 images:
   - name: meditriage-backend
     newName: ghcr.io/triageops-ts/meditriage-backend
-    newTag: "81793cf473c2e7050747bd7f81a286af2f5522e2"
+    newTag: "430ee04f8e06558ec28f65f6d0682b13ada7b53d"
 patches:
   - path: patch-deployment.yaml
   - path: patch-configmap.yaml
