@@ -1,20 +1,6 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+﻿apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: meditriage-backend
 spec:
   replicas: 2
-  template:
-    spec:
-      imagePullSecrets:
-        - name: ghcr-secret
-      containers:
-        - name: backend
-          image: meditriage-backend@sha256:a835fc25f9b69177fe21f6d4b735a1be0f4afb80ddd8ea2c180c10c70f896dcc
-          resources:
-            requests:
-              cpu: "100m"
-              memory: "128Mi"
-            limits:
-              cpu: "250m"
-              memory: "256Mi"
