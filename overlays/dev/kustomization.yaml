@@ -10,7 +10,7 @@ resources:
 images:
   - name: meditriage-backend
     newName: ghcr.io/triageops-ts/meditriage-backend
-    digest: sha256:03bc22ca66184b61371a439f51186dfddf9982b9d1e1bace06016ab261c72aec
+    digest: sha256:ece34777c3661feba5dd3ffda338bbe927caac9f8f96a040572c9f7df768b806
 
 patches:
   - path: patch-deployment.yaml
