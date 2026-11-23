@@ -6,7 +6,6 @@ namespace: triageops
 resources:
   - ../../base
   - migration-job.yaml
-  - triageops-sealed-secret.yaml
 
 images:
   - name: meditriage-backend
