@@ -6,12 +6,17 @@ namespace: triageops
 resources:
   - ../../base
   - migration-job.yaml
+  - triageops-sealed-secret.yaml
 
 images:
   - name: meditriage-backend
     newName: ghcr.io/triageops-ts/meditriage-backend
     digest: sha256:5a98c479ed91f5ffd738e2339f5a0348ec203fca2cc2f5d9cba71b25e3397aee
+  - name: meditriage-frontend
+    newName: ghcr.io/triageops-ts/meditriage-frontend
+    digest: sha256:acc2cad8c8f1ece0b1e2137635cd61a41275c54c787fae1a237a33de23b364fe
 
 patches:
   - path: patch-deployment.yaml
   - path: patch-configmap.yaml
+  - path: patch-ingress.yaml

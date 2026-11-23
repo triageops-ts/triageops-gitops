@@ -1,0 +1,16 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+  name: meditriage-frontend
+  labels:
+    app: meditriage-frontend
+    part-of: meditriage
+    tier: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: meditriage-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
