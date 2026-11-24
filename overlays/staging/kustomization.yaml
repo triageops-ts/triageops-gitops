@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: triageops-staging
+
+resources:
+  - ../../base
+  - redis.yaml
+  - ngrok.yaml
+  - migration-job.yaml
+
+images:
+  - name: meditriage-backend
+    newName: ghcr.io/triageops-ts/meditriage-backend
+    newTag: "2bb5797e5d88e9bac5e06eacd3c7795acce3d077"
+  - name: meditriage-frontend
+    newName: ghcr.io/triageops-ts/meditriage-frontend
+    newTag: "2bb5797e5d88e9bac5e06eacd3c7795acce3d077"
+
+patches:
+  - path: patch-configmap.yaml
+  - path: patch-ingress.yaml
