@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/triageops-ts/triageops-gitops.git
     path: overlays/staging
-    targetRevision: isi-staging
+    targetRevision: main
   destination:
     server: https://kubernetes.default.svc
     namespace: triageops-staging
