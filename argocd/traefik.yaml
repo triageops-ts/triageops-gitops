@@ -21,6 +21,8 @@ spec:
         ingressRoute:
           dashboard:
             enabled: false
+        additionalArguments:
+          - "--providers.kubernetesingress.ingressendpoint.hostname=coherent-mop-voltage.ngrok-free.dev"
   destination:
     server: https://kubernetes.default.svc
     namespace: traefik
