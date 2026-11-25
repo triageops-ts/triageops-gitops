@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ngrok
+  labels:
+    app: ngrok
+    part-of: meditriage
+    tier: edge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ngrok
+  template:
+    metadata:
+      labels:
+        app: ngrok
+        part-of: meditriage
+        tier: edge
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: ngrok
+          image: ngrok/ngrok:3
+          args:
+            - http
+            - http://traefik.traefik.svc.cluster.local:80
+            - --url=https://coherent-mop-voltage.ngrok-free.dev
+            - --inspect=false
+            - --log=stdout
+          env:
+            - name: NGROK_AUTHTOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: ngrok-secret
+                  key: NGROK_AUTHTOKEN
+          resources:
+            requests:
+              cpu: "20m"
+              memory: "32Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]

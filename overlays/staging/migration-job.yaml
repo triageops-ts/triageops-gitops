@@ -1,0 +1,74 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: meditriage-migrations
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 1
+  activeDeadlineSeconds: 600
+  template:
+    metadata:
+      labels:
+        app: meditriage-migrations
+        part-of: meditriage
+    spec:
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+      containers:
+        - name: migrations
+          image: meditriage-backend
+          command: ["sh", "-c"]
+          args:
+            - >-
+              set -e;
+              echo "== alembic upgrade head ==";
+              python -m alembic upgrade head;
+              echo "== seed-roles ==";
+              python -m app.cli seed-roles;
+              echo "== seed-demo ==";
+              python -m app.cli seed-demo;
+              echo "== listo ==";
+          env:
+            - name: MIGRATION_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: triageops-migration-secrets
+                  key: MIGRATION_DATABASE_URL
+            - name: SEED_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: triageops-migration-secrets
+                  key: SEED_DATABASE_URL
+            - name: DEMO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: triageops-migration-secrets
+                  key: DEMO_PASSWORD
+            - name: APP_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: triageops-secrets
+                  key: APP_ENCRYPTION_KEY
+            - name: APP_RUT_HASH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: triageops-secrets
+                  key: APP_RUT_HASH_KEY
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
