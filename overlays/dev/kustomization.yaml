@@ -10,7 +10,7 @@ resources:
 images:
   - name: meditriage-backend
     newName: ghcr.io/triageops-ts/meditriage-backend
-    digest: sha256:8a9aabd67eaf83b0d8402a1a88f6a81d066138229756919dbe8bc703c055dc2f
+    digest: sha256:a27d188d40ae3e45cc3d736f803f6bee95e61fef92a848912b679453be709f53
   - name: meditriage-frontend
     newName: ghcr.io/triageops-ts/meditriage-frontend
     digest: sha256:acc2cad8c8f1ece0b1e2137635cd61a41275c54c787fae1a237a33de23b364fe
